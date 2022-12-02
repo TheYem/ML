@@ -1,3 +1,29 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+from sklearn.linear_model import Perceptron
+x = [
+    [0.0, 0.0],
+    [1.0, 1.0]
+]
+y = [0.0, 1.0]
+x_test = [[0.0, 1.0],[1.0, 0.0]]
+y_test = [0.0, 0.0]
+
+model = Perceptron()
+model.fit(x, y)
+print(model.score(x_test, y_test))
+
+model = Perceptron()
+model.fit(train_x, train_y)
+print(model.score(test_x, test_y))
+pred = []
+test_x = np.array(test_x)
+for ele in test_x:
+    pred.append(model.predict([ele]))
+print(classification_report(pred, test_y))
+cm = confusion_matrix(pred, test_y);
+cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']);
+cm_display.plot();
+plt.show();
