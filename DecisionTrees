@@ -1,3 +1,18 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import tree
+model = DecisionTreeClassifier(criterion="gini");
+model.fit(train_x, train_y)
+pred = []
+test_x = np.array(test_x)
+for ele in test_x:
+    pred.append(model.predict([ele]))
+print(classification_report(pred, test_y))
+cm = confusion_matrix(pred, test_y);
+cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']);
+cm_display.plot();
+plt.show();
+tree.plot_tree(model, feature_names=list(train_x.columns));
