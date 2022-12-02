@@ -1,3 +1,31 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+data = pd.read_csv("iris.csv")
+
+x = data[['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']]
+y = data['Species']
+
+y.unique()
+
+y = y.map({'Iris-setosa': 1, 'Iris-versicolor': 2, 'Iris-virginica': 3})
+
+from sklearn.model_selection import train_test_split
+train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.3)
+
+model = LogisticRegression()
+model.fit(train_x, train_y)
+print(model.score(test_x, test_y))
+print(model.coef_)
+pred = []
+for ele in test_x:
+    pred.append(model.predict([ele]))
+print(classification_report(pred, test_y))
+cm = confusion_matrix(pred, test_y);
+cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']);
+cm_display.plot();
+plt.show();
